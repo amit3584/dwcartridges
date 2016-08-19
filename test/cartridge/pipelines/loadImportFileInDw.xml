@@ -2,55 +2,47 @@
 <?demandware-pipeline version="2.0"?>
 
 <pipeline type="view">
-  <description>firstviewline</description>
   <branch basename="Start">
     <segment>
       <node>
         <start-node name="Start" secure="false"/>
-        <node-display x="0" y="0"/>
+        <node-display x="2" y="0"/>
       </node>
-      <simple-transition/>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
       <node>
         <pipelet-node pipelet-name="Script" pipelet-set-identifier="bc_api">
           <config-property key="Transactional" value="false"/>
           <config-property key="OnError" value="PIPELET_ERROR"/>
-          <config-property key="ScriptFile" value="loadOrders.ds"/>
+          <config-property key="ScriptFile" value="loadImportFileInDw.ds"/>
           <key-binding alias="null" key="ScriptLog"/>
           <key-binding alias="OrderNo" key="OrderNo"/>
         </pipelet-node>
         <node-display x="0" y="1"/>
         <branch basename="b2" source-connector="error">
-          <transition target-connector="in"/>
+          <transition target-connector="in">
+            <transition-display>
+              <bend-point relative-to="source" x="1" y="0"/>
+            </transition-display>
+          </transition>
           <segment>
             <node>
               <interaction-node transaction-required="false">
                 <template buffered="true" dynamic="false" name="error"/>
               </interaction-node>
-              <node-display x="1" y="1"/>
+              <node-display orientation="horizontal" x="1" y="0"/>
             </node>
           </segment>
         </branch>
       </node>
-      <simple-transition/>
-      <node>
-        <pipelet-node pipelet-name="GetOrder" pipelet-set-identifier="bc_api">
-          <key-binding alias="OrderNo" key="OrderNo"/>
-          <key-binding alias="Order" key="Order"/>
-        </pipelet-node>
-        <node-display x="0" y="1"/>
-        <branch basename="b3" source-connector="error">
-          <transition target-connector="in"/>
-          <segment>
-            <node>
-              <interaction-node transaction-required="false">
-                <template buffered="true" dynamic="false" name="error"/>
-              </interaction-node>
-              <node-display x="1" y="1"/>
-            </node>
-          </segment>
-        </branch>
-      </node>
-      <simple-transition/>
+      <simple-transition>
+        <transition-display>
+          <bend-point relative-to="source" x="0" y="1"/>
+        </transition-display>
+      </simple-transition>
       <node>
         <interaction-node transaction-required="false">
           <template buffered="true" dynamic="false" name="success"/>
