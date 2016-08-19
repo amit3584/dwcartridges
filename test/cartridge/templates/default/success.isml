@@ -1,4 +1,3 @@
 <!--- TEMPLATENAME: success.isml --->
 <p>Hello friends.</p>
-${pdict.Output1}
-${Output1}
+${pdict.Order.getCurrencyCode()}
